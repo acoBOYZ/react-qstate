@@ -1,6 +1,7 @@
 import { defineConfig, mergeConfig } from 'vite';
 import { tanstackViteConfig } from '@tanstack/config/vite';
 import dts from 'vite-plugin-dts';
+import { resolve } from 'path';
 
 const customConfig = defineConfig({
   plugins: [
@@ -9,7 +10,12 @@ const customConfig = defineConfig({
       entryRoot: 'src',
       tsconfigPath: './tsconfig.json'
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      "@acoboyz/react-qstate": resolve(__dirname, "./src/index.ts"),
+    }
+  },
 });
 
 export default mergeConfig(

@@ -1,10 +1,14 @@
+// ./index.ts
 import * as React from 'react';
 import { useQuery, useQueryClient, QueryKey } from '@tanstack/react-query';
 import SuperJSON from 'superjson';
+import { queries } from './queries';
+import { generateUniqueKey } from './utils';
 
-export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T | ((prevState: T) => T)) => void, () => void] {
+export function useQState<T>(initialData?: T, userQueryKey?: string): [T, (data: T | ((prevState: T) => T)) => void, () => void] {
   const queryClient = useQueryClient();
 
+  const queryKey = userQueryKey ? queries.uqk(userQueryKey).queryKey : [generateUniqueKey()];
   const serializedInitialData = initialData !== undefined ? SuperJSON.stringify(initialData) : SuperJSON.stringify({});
 
   const { data } = useQuery({
