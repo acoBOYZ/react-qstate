@@ -3,24 +3,54 @@
   "version": "0.1.0",
   "description": "Hooks for managing, caching and syncing asynchronous and remote data in React",
   "author": "acoBOYZ",
-  "license": "MIT",  
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/acoBOYZ/query.git",
-    "directory": "packages/react-query"
+    "url": "https://github.com/acoBOYZ/react-qstate.git"
   },
+  "homepage": "https://github.com/acoBOYZ",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/acoBOYZ"
+  },
+  "type": "module",
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "vite build && publint --strict",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run build",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "release": "tanstack-config publish"
   },
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
-  "keywords": [],
+  "keywords": [
+    "react",
+    "react-query",
+    "superjson",
+    "state management",
+    "hooks"
+  ],
   "dependencies": {
     "@tanstack/react-query": "^5.51.1",
     "react": "^18.3.1",
@@ -32,13 +62,12 @@
     "@babel/preset-env": "^7.24.8",
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
-    "@rollup/plugin-commonjs": "^26.0.1",
-    "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "rollup": "^2.79.1",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vite": "^5.3.3",
+    "vite-plugin-dts": "^3.9.1",
+    "@tanstack/config": "^0.9.6",
+    "publint": "^0.2.8"
   }
 }
