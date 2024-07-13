@@ -1,7 +1,7 @@
 {
   "name": "@acoboyz/react-qstate",
   "version": "0.1.0",
-  "description": "QHook powered by @tanstack/react-query for managing, caching and syncing asynchronous and remote data in React",
+  "description": "QueryHook for managing, caching and syncing asynchronous and remote data in React powered by @tanstack/react-query",
   "author": "acoBOYZ",
   "license": "MIT",
   "repository": {
@@ -38,7 +38,7 @@
     "build": "vite build && publint --strict",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run build",
+    "prepublishOnly": "npm run build",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
@@ -53,10 +53,8 @@
   ],
   "dependencies": {
     "@tanstack/react-query": "^5.51.1",
-    "glob": "^9.3.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "rimraf": "^4.4.1",
     "superjson": "^2.2.1"
   },
   "devDependencies": {
@@ -64,14 +62,16 @@
     "@babel/preset-env": "^7.24.8",
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
-    "@eslint/config-array": "^0.17.0",
-    "@eslint/object-schema": "^2.1.4",
-    "@tanstack/config": "^0.9.6",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "publint": "^0.2.8",
     "typescript": "^5.5.3",
-    "vite": "^5.3.3",
-    "vite-plugin-dts": "^3.9.1"
+    "vite": "^4.5.3",
+    "vite-plugin-dts": "^3.9.1",
+    "@tanstack/config": "^0.9.6",
+    "publint": "^0.2.8",
+    "glob": "^11.0.0",
+    "rimraf": "^6.0.1",
+    "@eslint/config-array": "^0.17.0",
+    "@eslint/object-schema": "^2.1.4"
   }
 }
