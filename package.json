@@ -1,6 +1,6 @@
 {
   "name": "@acoboyz/react-qstate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "QueryHook for managing, caching and syncing asynchronous and remote data in React powered by @tanstack/react-query",
   "author": "acoBOYZ",
   "license": "MIT",
@@ -32,7 +32,8 @@
   },
   "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "build": "vite build && publint --strict",
@@ -65,7 +66,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "typescript": "^5.5.3",
-    "vite": "^4.5.3",
+    "vite": "^5.3.3",
     "vite-plugin-dts": "^3.9.1",
     "@tanstack/config": "^0.9.6",
     "publint": "^0.2.8",
@@ -73,5 +74,8 @@
     "rimraf": "^6.0.1",
     "@eslint/config-array": "^0.17.0",
     "@eslint/object-schema": "^2.1.4"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0"
   }
 }
