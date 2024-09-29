@@ -11,11 +11,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@acoboyz/react-qstate": ["./src/index.ts"]
-    }
+    // "baseUrl": ".",
+    // "paths": {
+    //   "@acoboyz/react-qstate": ["./src/index.ts"]
+    // }
   },
   "include": ["src/**/*", "vite.config.ts"],
-  "exclude": ["node_modules", "dist", "test"]
+  "exclude": ["node_modules", "dist", "test", "history"]
 }

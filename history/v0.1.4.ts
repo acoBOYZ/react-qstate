@@ -24,17 +24,19 @@ import SuperJSON from 'superjson';
 export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T | ((prevState: T) => T)) => void, () => void] {
   const queryClient = useQueryClient();
 
-  // Determine if the data should be serialized based on the initial data type or the generic type T
-  const shouldSerialize = !(typeof initialData === 'string' || typeof initialData === 'number' || typeof initialData === 'boolean');
+  // Check if initialData is a primitive type
+  const isPrimitive = (data: any): data is string | number | boolean => {
+    return ['string', 'number', 'boolean'].includes(typeof data);
+  };
 
   // Memoize the initialData
   const memoizedInitialData = React.useMemo(() => initialData, [initialData]);
 
-  const serializedInitialData = shouldSerialize
-    ? memoizedInitialData !== undefined
-      ? SuperJSON.stringify(memoizedInitialData)
-      : SuperJSON.stringify({})
-    : memoizedInitialData;
+  const serializedInitialData = isPrimitive(memoizedInitialData)
+    ? memoizedInitialData
+    : memoizedInitialData !== undefined
+    ? SuperJSON.stringify(memoizedInitialData)
+    : SuperJSON.stringify({});
 
   const { data } = useQuery({
     queryKey: queryKey,
@@ -45,19 +47,18 @@ export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T 
     refetchOnReconnect: false,
     refetchIntervalInBackground: false,
     initialData: serializedInitialData,
-    staleTime: Infinity,
   });
 
   function setData(newData: T | ((prevState: T) => T)) {
     queryClient.setQueryData(queryKey, (prevData: unknown) => {
-      const parsedPrevData = shouldSerialize ? SuperJSON.parse<T>(prevData as string) : (prevData as T);
+      const parsedPrevData = isPrimitive(prevData) ? (prevData as T) : SuperJSON.parse<T>(prevData as string);
       const resolvedData = typeof newData === 'function' ? (newData as (prevState: T) => T)(parsedPrevData) : newData;
-      return shouldSerialize ? SuperJSON.stringify(resolvedData) : resolvedData;
+      return isPrimitive(resolvedData) ? resolvedData : SuperJSON.stringify(resolvedData);
     });
   }
 
   function resetData() {
-    if (shouldSerialize) {
+    if (!isPrimitive(memoizedInitialData)) {
       localStorage.removeItem(queryKey.toString());
     }
     queryClient.invalidateQueries({
@@ -70,8 +71,8 @@ export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T 
 
   const parsedData = React.useMemo(() => {
     if (data === undefined) return undefined;
-    return shouldSerialize ? SuperJSON.parse<T>(data as string) : (data as T);
-  }, [data, shouldSerialize]);
+    return isPrimitive(data) ? (data as T) : SuperJSON.parse<T>(data as string);
+  }, [data]);
 
   return [parsedData as T, setData, resetData];
 }

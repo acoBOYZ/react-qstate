@@ -45,7 +45,6 @@ export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T 
     refetchOnReconnect: false,
     refetchIntervalInBackground: false,
     initialData: serializedInitialData,
-    staleTime: Infinity,
   });
 
   function setData(newData: T | ((prevState: T) => T)) {

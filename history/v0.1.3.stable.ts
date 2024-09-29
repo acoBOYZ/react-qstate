@@ -1,3 +1,4 @@
+// ./index.ts
 import * as React from 'react';
 import { useQuery, useQueryClient, QueryKey } from '@tanstack/react-query';
 import SuperJSON from 'superjson';
@@ -24,17 +25,7 @@ import SuperJSON from 'superjson';
 export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T | ((prevState: T) => T)) => void, () => void] {
   const queryClient = useQueryClient();
 
-  // Determine if the data should be serialized based on the initial data type or the generic type T
-  const shouldSerialize = !(typeof initialData === 'string' || typeof initialData === 'number' || typeof initialData === 'boolean');
-
-  // Memoize the initialData
-  const memoizedInitialData = React.useMemo(() => initialData, [initialData]);
-
-  const serializedInitialData = shouldSerialize
-    ? memoizedInitialData !== undefined
-      ? SuperJSON.stringify(memoizedInitialData)
-      : SuperJSON.stringify({})
-    : memoizedInitialData;
+  const serializedInitialData = initialData !== undefined ? SuperJSON.stringify(initialData) : SuperJSON.stringify({});
 
   const { data } = useQuery({
     queryKey: queryKey,
@@ -45,21 +36,17 @@ export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T 
     refetchOnReconnect: false,
     refetchIntervalInBackground: false,
     initialData: serializedInitialData,
-    staleTime: Infinity,
   });
 
   function setData(newData: T | ((prevState: T) => T)) {
-    queryClient.setQueryData(queryKey, (prevData: unknown) => {
-      const parsedPrevData = shouldSerialize ? SuperJSON.parse<T>(prevData as string) : (prevData as T);
+    queryClient.setQueryData(queryKey, (prevData: string) => {
+      const parsedPrevData = SuperJSON.parse<T>(prevData);
       const resolvedData = typeof newData === 'function' ? (newData as (prevState: T) => T)(parsedPrevData) : newData;
-      return shouldSerialize ? SuperJSON.stringify(resolvedData) : resolvedData;
+      return SuperJSON.stringify(resolvedData);
     });
   }
 
   function resetData() {
-    if (shouldSerialize) {
-      localStorage.removeItem(queryKey.toString());
-    }
     queryClient.invalidateQueries({
       queryKey: queryKey,
     });
@@ -68,10 +55,7 @@ export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T 
     });
   }
 
-  const parsedData = React.useMemo(() => {
-    if (data === undefined) return undefined;
-    return shouldSerialize ? SuperJSON.parse<T>(data as string) : (data as T);
-  }, [data, shouldSerialize]);
+  const parsedData = React.useMemo(() => (data ? SuperJSON.parse<T>(data) : undefined), [data]);
 
   return [parsedData as T, setData, resetData];
 }
