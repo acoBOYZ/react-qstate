@@ -48,30 +48,27 @@ export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T 
     staleTime: Infinity,
   });
 
-  function setData(newData: T | ((prevState: T) => T)) {
+  const setData = React.useCallback((newData: T | ((prevState: T) => T)) => {
     queryClient.setQueryData(queryKey, (prevData: unknown) => {
       const parsedPrevData = shouldSerialize ? SuperJSON.parse<T>(prevData as string) : (prevData as T);
       const resolvedData = typeof newData === 'function' ? (newData as (prevState: T) => T)(parsedPrevData) : newData;
       return shouldSerialize ? SuperJSON.stringify(resolvedData) : resolvedData;
     });
-  }
+  }, []);
 
-  function resetData() {
-    if (shouldSerialize) {
-      localStorage.removeItem(queryKey.toString());
-    }
+  const resetData = React.useCallback(() => {
     queryClient.invalidateQueries({
       queryKey: queryKey,
     });
     queryClient.refetchQueries({
       queryKey: queryKey,
     });
-  }
+  }, []);
 
   const parsedData = React.useMemo(() => {
     if (data === undefined) return undefined;
     return shouldSerialize ? SuperJSON.parse<T>(data as string) : (data as T);
   }, [data, shouldSerialize]);
 
-  return [parsedData as T, setData, resetData];
+  return [parsedData as T, setData, resetData] as const;
 }
