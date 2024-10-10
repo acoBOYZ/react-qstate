@@ -54,7 +54,7 @@ export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T 
       const resolvedData = typeof newData === 'function' ? (newData as (prevState: T) => T)(parsedPrevData) : newData;
       return shouldSerialize ? SuperJSON.stringify(resolvedData) : resolvedData;
     });
-  }, [queryClient, queryKey, shouldSerialize]);
+  }, []);
 
   const resetData = React.useCallback(() => {
     queryClient.invalidateQueries({
@@ -63,7 +63,7 @@ export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T 
     queryClient.refetchQueries({
       queryKey: queryKey,
     });
-  }, [queryClient, queryKey]);
+  }, []);
 
   const parsedData = React.useMemo(() => {
     if (data === undefined) return undefined;
