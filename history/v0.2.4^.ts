@@ -77,9 +77,7 @@ export function useQState<T>(queryKey: QueryKey, initialData?: T): [T, (data: T 
 
   const parsedData = React.useMemo(() => {
     if (data === undefined) return undefined;
-    return shouldSerializeRef.current
-      ? SuperJSON.parse<T>(data as string)
-      : (data as T);
+    return shouldSerializeRef.current ? SuperJSON.parse<T>(data as string) : (data as T);
   }, [data]);
 
   return [parsedData as T, setData, resetData] as const;

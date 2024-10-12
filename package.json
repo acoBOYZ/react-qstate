@@ -1,6 +1,6 @@
 {
   "name": "@acoboyz/react-qstate",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "QueryHook for managing, caching and syncing asynchronous and remote data in React powered by @tanstack/react-query",
   "author": "acoBOYZ",
   "license": "MIT",
