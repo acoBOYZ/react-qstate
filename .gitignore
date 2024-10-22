@@ -34,3 +34,7 @@ dist.tar.gz
 # Generated Files
 # *.gen*
 .vercel
+test
+.cmd
+.eslintrc.cjs
+history

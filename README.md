@@ -41,14 +41,14 @@ export default App;
 
 #### Importing the Hook
 ```tsx
-import { useQState } from 'path-to-your-useQState-hook';
+import { useQState } from '@acoboyz/react-qstate';
 ```
 
 #### Basic Example
 ```tsx
 Copy code
 import React from 'react';
-import { useQState } from 'path-to-your-useQState-hook';
+import { useQState } from '@acoboyz/react-qstate';
 
 function Counter() {
   const [count, setCount, resetCount] = useQState<number>(['counter'], 0);
@@ -68,7 +68,7 @@ function Counter() {
 
 ```tsx
 import React from 'react';
-import { useQState } from 'path-to-your-useQState-hook';
+import { useQState } from '@acoboyz/react-qstate';
 
 interface UserProfile {
   id: number;
@@ -131,7 +131,7 @@ The `useQState` hook uses TanStack Query to manage stateful data and SuperJSON t
 
 ```tsx
 import React from 'react';
-import { useQState } from 'path-to-your-useQState-hook';
+import { useQState } from '@acoboyz/react-qstate';
 
 interface Todo {
   id: number;
@@ -179,7 +179,7 @@ function TodoApp() {
 If you want to persist state across browser sessions, you can integrate `localStorage`:
 
 ```tsx
-import { useQState } from 'path-to-your-useQState-hook';
+import { useQState } from '@acoboyz/react-qstate';
 
 function usePersistentState<T>(key: string, initialData: T) {
   const [state, setState, resetState] = useQState<T>([key], initialData);
