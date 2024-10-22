@@ -35,6 +35,6 @@ dist.tar.gz
 # *.gen*
 .vercel
 test
-.cmd
-.eslintrc.cjs
+*.cmd
+*.eslintrc.cjs
 history
