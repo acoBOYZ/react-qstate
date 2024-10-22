@@ -46,7 +46,6 @@ import { useQState } from '@acoboyz/react-qstate';
 
 #### Basic Example
 ```tsx
-Copy code
 import React from 'react';
 import { useQState } from '@acoboyz/react-qstate';
 
