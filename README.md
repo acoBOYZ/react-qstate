@@ -1,11 +1,10 @@
-# useQState - A Custom State Management Hook with TanStack Query and SuperJSON
+# useQState - A Custom State Management Hook with TanStack Query
 
-`useQState` is a custom React hook that simplifies state management by leveraging [TanStack Query](https://tanstack.com/query/latest) and [SuperJSON](https://github.com/blitz-js/superjson). It offers an efficient way to manage both global and local state with automatic serialization of complex data types, all while taking advantage of TanStack Query's powerful caching capabilities.
+`useQState` is a custom React hook that simplifies state management by leveraging [TanStack Query](https://tanstack.com/query/latest). It offers an efficient way to manage both global and local state with automatic serialization of complex data types, all while taking advantage of TanStack Query's powerful caching capabilities.
 
 ## Features
 
 - **Seamless State Management**: Manage state across your React application without additional state management libraries.
-- **Automatic Serialization**: Effortlessly handle complex data types using SuperJSON.
 - **Performance Optimizations**: Benefit from TanStack Query's caching and performance features.
 - **Intuitive API**: Familiar API similar to React's useState hook.
 
@@ -111,10 +110,9 @@ resetState();
 
 ## How It Works
 
-The `useQState` hook uses TanStack Query to manage stateful data and SuperJSON to serialize and deserialize complex data types. Here's a brief overview:
+The `useQState` hook uses TanStack Query to manage stateful data to serialize and deserialize complex data types. Here's a brief overview:
 
 - **State Initialization**: When you first call `useQState`, it initializes the state with the provided `initialData`.
-- **Data Serialization**: If the data is a complex type (object, array, etc.), it gets serialized using SuperJSON.
 - **Caching**: TanStack Query caches the state data, allowing for efficient updates and retrievals.
 - **State Updates**: Use the `setState` function to update the state. It supports both direct updates and updater functions (like React's `setState`).
 - **State Reset**: The `resetState` function invalidates the query and resets the state to its initial value.
@@ -123,7 +121,6 @@ The `useQState` hook uses TanStack Query to manage stateful data and SuperJSON t
 
 - **Global State Without Additional Libraries**: Manage global state without needing Redux or Context API.
 - **Performance Optimizations**: Leverage TanStack Query's caching to minimize unnecessary re-renders and data fetching.
-- **Automatic Serialization**: SuperJSON handles serialization of dates, maps, sets, and other complex types out of the box.
 - **Simple API**: Designed to be as straightforward as React's built-in hooks.
 
 ## Example: Todo List
@@ -209,7 +206,6 @@ This project is licensed under the MIT License.
 ## Acknowledgments
 
 - [TanStack Query](https://tanstack.com/query/latest) for powerful asynchronous state management.
-- [SuperJSON](https://github.com/blitz-js/superjson) for seamless serialization of complex data types.
   
 ##
 By providing this hook, we aim to simplify state management in React applications, making it more efficient and developer-friendly. If you have any questions or need further assistance, please don’t hesitate to reach out.
